@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const attractionSchema = new Schema({
-  id: { type: Number, required: true },
-  name: { type: String, required: true },
-  location: { type: String, required: true },
-  image: { type: String },
+  name: { type: String },
+  location: { type: String },
+  imageUrl: { type: String },
   mapURL: { type: String },
-  descriptions: { type: String },
+  description: { type: String },
 });
 
 const Attraction =

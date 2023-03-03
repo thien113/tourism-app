@@ -1,27 +1,37 @@
 import Button from "./Button";
 
-export default function Form() {
+export default function Form({ addAttraction }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const attractionData = Object.fromEntries(formData);
+    const form = event.target;
+    const name = form.name.value;
+    const imageUrl = form.imageUrl.value;
+    const location = form.location.value;
+    const mapUrl = form.mapUrl.value;
+    const description = form.description.value;
 
-    const response = await fetch("/api/products", {
+    const newCard = {
+      name: name,
+      imageUrl: imageUrl,
+      location: location,
+      mapUrl: mapUrl,
+      description: description,
+    };
+    const response = await fetch("/api/attractions", {
       method: "POST",
+      body: JSON.stringify(newCard),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(productData),
     });
-
     if (response.ok) {
       await response.json();
-      products.mutate();
-      event.target.reset();
+      form.reset();
     } else {
-      console.error(response.status);
+      console.error(`Error: ${response.status}`);
     }
+    addAttraction(newCard);
   }
   return (
     <>
@@ -33,11 +43,11 @@ export default function Form() {
         <input name="imageUrl" id="imageUrl" />
         <label htmlFor="location">Location: </label>
         <input name="location" id="location" />
-        <label htmlFor="mapUrl">Image Url: </label>
+        <label htmlFor="mapUrl">Map Url: </label>
         <input name="mapUrl" id="mapUrl" />
         <label htmlFor="description">Description: </label>
         <textarea rows={4} name="description" id="description" />
-        <Button text="Save Place" url="/api/attractions" />
+        <Button text="Save Place" />
       </form>
     </>
   );
