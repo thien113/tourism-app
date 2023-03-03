@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
 
 export default function DetailsPage() {
   const [attraction, setAttraction] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
   const id = router.query.id;
 
@@ -29,6 +30,19 @@ export default function DetailsPage() {
       console.log(response.status);
     }
   }
+
+  async function handleEdit(event) {
+    event.preventDefault();
+
+    try {
+      const formData = new FormData(event.target);
+      const productData = Object.fromEntries(formData);
+      await trigger(productData);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <h2>{attraction.name}</h2>
@@ -44,6 +58,8 @@ export default function DetailsPage() {
         Map
       </a>
       <Button text="Delete" onClick={handleDelete} />
+      <Button text="Edit" onClick={() => setIsEditing(!isEditing)} />
+      {isEditing && <Form />}
     </>
   );
 }
