@@ -2,8 +2,12 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
+import { useEffect } from "react";
 
-export default function Home({ attractions }) {
+export default function Home({ attractions, getAll }) {
+  useEffect(() => {
+    getAll();
+  }, []);
   return (
     <>
       <Head>

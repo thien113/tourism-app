@@ -26,6 +26,7 @@ export default async function handler(request, response) {
     }
   }
   if (request.method === "DELETE") {
+    console.log("Inside api delete call");
     try {
       const attractionToDelete = await Attraction.findByIdAndDelete(id);
       return response.status(200).json(attractionToDelete);

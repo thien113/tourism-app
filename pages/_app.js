@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function App({ Component, pageProps }) {
   const [attractionList, setAttractionList] = useState([]);
   let attractions;
-  useEffect(() => {
+  function getAllAttractions() {
     fetch("/api/attractions")
       .then((res) => res.json())
       .then((data) => (attractions = data))
@@ -15,6 +15,9 @@ export default function App({ Component, pageProps }) {
       .then(() => {
         setAttractionList(attractions);
       });
+  }
+  useEffect(() => {
+    getAllAttractions();
   }, []);
   function addAttraction(newAttraction) {
     setAttractionList([newAttraction, ...attractionList]);
@@ -26,6 +29,7 @@ export default function App({ Component, pageProps }) {
         {...pageProps}
         attractions={attractionList}
         addAttraction={addAttraction}
+        getAll={getAllAttractions}
       />
     </>
   );

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Button from "@/components/Button";
 
 export default function DetailsPage() {
   const [attraction, setAttraction] = useState("");
@@ -17,6 +18,17 @@ export default function DetailsPage() {
     const attraction = await response.json();
     setAttraction(attraction);
   }
+
+  async function handleDelete() {
+    const response = await fetch(`/api/attractions/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      router.push("/");
+    } else {
+      console.log(response.status);
+    }
+  }
   return (
     <>
       <h2>{attraction.name}</h2>
@@ -31,6 +43,7 @@ export default function DetailsPage() {
       <a target="__blank" href={attraction.mapURL}>
         Map
       </a>
+      <Button text="Delete" onClick={handleDelete} />
     </>
   );
 }
