@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import Button from "./Button";
 
 export default function Form({ addAttraction }) {
+  const router = useRouter();
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -27,6 +29,7 @@ export default function Form({ addAttraction }) {
     });
     if (response.ok) {
       await response.json();
+      router.push("/");
       form.reset();
     } else {
       console.error(`Error: ${response.status}`);

@@ -1,9 +1,18 @@
 import dbConnect from "../../../db/connect";
-import Attraction from "../../../db/models/Attraction";
+import Attraction from "@/db/models/Attraction";
 
 export default async function handler(request, response) {
   await dbConnect();
   const { id } = request.query;
+
+  if (request.method === "GET") {
+    try {
+      const attractionById = await Attraction.findById(id);
+      response.status(200).json(attractionById);
+    } catch (error) {
+      response.status(400).json({ error: error.message });
+    }
+  }
 
   if (request.method === "PUT") {
     try {
