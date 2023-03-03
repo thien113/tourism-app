@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,12 +8,15 @@ export default function DetailsPage() {
   const router = useRouter();
   const id = router.query.id;
 
+  useEffect(() => {
+    getAttractionById();
+  }, []);
+
   async function getAttractionById() {
     const response = await fetch(`/api/attractions/${id}`);
     const attraction = await response.json();
     setAttraction(attraction);
   }
-  getAttractionById();
   return (
     <>
       <h2>{attraction.name}</h2>
