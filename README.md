@@ -1,4 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tourism App with React, Next.js and MongoDb/Mongoose
+
+A tourism app of Hamburg with its most popular sights.
+The Data is stored in MongoDb, and can be called over api to render the data inside the React App.
+
+### Features
+
+- You see all the sights with its name, description and the location on a map
+- CRUD: You can create new sights, edit or even delete it.
+
+### Technique used
+
+- MongoDb, Mongoose - Schema
+- React - hooks (useEffect, useState)
+- fetch(), array methods, async functions
 
 ## Getting Started
 
